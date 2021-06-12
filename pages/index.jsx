@@ -2,7 +2,9 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const [items, setItems] = useState(() => JSON.parse(window.localStorage.getItem('local-does:items')) || []);
+  const [items, setItems] = useState(
+    () => JSON.parse(window.localStorage.getItem('local-does:items')) || [],
+  );
   const [currItem, setCurrItem] = useState('');
 
   useEffect(() => {
@@ -40,12 +42,22 @@ export default function Home() {
           />
         </form>
 
-        {items && items.map((item) => (
-          <div key={item} className="relative w-full h-32 flex flex-col items-center justify-center my-4 rounded-lg bg-gray-800 shadow-md">
-            <h2 className="text-lg">{item}</h2>
-            <button className="text-red-400 absolute top-0 right-0 m-2" onClick={() => deleteItem(item)} type="button">rem</button>
-          </div>
-        ))}
+        {items
+          && items.map((item) => (
+            <div
+              key={item}
+              className="relative w-full h-32 text-center my-4 pt-4 rounded-lg bg-gray-800 overflow-hidden shadow-md transition"
+            >
+              <h2 className="text-lg">{item}</h2>
+              <button
+                className="absolute bottom-0 left-0 w-full h-6 bg-red-400 hover:bg-red-500 focus:outline-none"
+                onClick={() => deleteItem(item)}
+                type="button"
+              >
+                Delete
+              </button>
+            </div>
+          ))}
       </main>
     </div>
   );
